@@ -1,11 +1,8 @@
 ## 4/20/2014
-## This function compute the inverse of a matrix and then cache the result for later use.
-## How to run
-## myM <- makeCacheMatrix( matrix(c(4,2,7,6),nrow=2,ncol=2))
-## myMI <- cacheSolve(myM)
-## running myMI <- cacheSolve(myM) again will trigger the cache
+## Put comments here that give an overall description of what your
+## functions do
 
-## This function store the matrix and the inverse cache
+## Write a short comment describing this function
 makeCacheMatrix <- function(x = matrix()) {
   m <- NULL
   
@@ -29,7 +26,7 @@ makeCacheMatrix <- function(x = matrix()) {
        getsolve = getsolve)
 }
 
-## This is where we solve the inverse. if the inverse exist in cache return it else solve and store in cache. 
+## Write a short comment describing this function
 cacheSolve <- function(x, ...) {
   ## Return a matrix that is the inverse of 'x'
   m <- x$getsolve()
@@ -51,3 +48,31 @@ cacheSolve <- function(x, ...) {
   
   m
 }
+
+
+makeVector <- function(x = numeric()) {
+  m <- NULL
+  set <- function(y) {
+    x <<- y
+    m <<- NULL
+  }
+  get <- function() x
+  setmean <- function(mean) m <<- mean
+  getmean <- function() m
+  list(set = set, get = get,
+       setmean = setmean,
+       getmean = getmean)
+}
+
+cachemean <- function(x, ...) {
+  m <- x$getmean()
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m)
+  }
+  data <- x$get()
+  m <- mean(data, ...)
+  x$setmean(m)
+  m
+}
+
